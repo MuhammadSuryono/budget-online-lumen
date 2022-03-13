@@ -102,6 +102,9 @@ $app->register(\Barryvdh\DomPDF\ServiceProvider::class);
 $app->register(Sentry\Laravel\ServiceProvider::class);
 
 $app->bind(\App\Repositories\Interfaces\AuthInterface::class, \App\Repositories\AuthRepository::class);
+$app->bind(\App\Repositories\Interfaces\SubmissionBudgetInterface::class, \App\Repositories\SubmissionRepository::class);
+$app->bind(\App\Repositories\Interfaces\BpuInterface::class, \App\Repositories\BpuRepository::class);
+$app->bind(\App\Repositories\Interfaces\ItemBudgetInterface::class, \App\Repositories\ItemBudgetRepository::class);
 
 /*
 |--------------------------------------------------------------------------

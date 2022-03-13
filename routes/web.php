@@ -32,4 +32,21 @@ $router->group(['prefix' => 'api/v1'], function () use ($router)
         $router->post('refresh-token', 'AuthController@refresh_token');
     });
 
+    $router->group(['prefix' => 'submission'], function () use ($router)
+    {
+        $router->get('/list', 'Submission\SubmissionBudgetController@list_submission');
+        $router->get('/{submissionId}', 'Submission\SubmissionBudgetController@read');
+
+        $router->group(['prefix' => '{submissionId}/item'], function () use ($router)
+        {
+            $router->get('/list', 'Submission\Item\ItemBudgetController@list_items');
+        });
+    });
+
+    $router->group(['prefix' => 'item'], function () use ($router)
+    {
+        $router->get('/{itemId}', 'Submission\Item\ItemBudgetController@read');
+        $router->get('/{itemId}/bpu', 'Bpu\BpuController@list_bpu');
+    });
+
 });
