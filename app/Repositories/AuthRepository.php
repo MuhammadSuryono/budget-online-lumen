@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\RoleBpu;
 use App\Repositories\Interfaces\AuthInterface;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,7 +14,7 @@ class AuthRepository extends Controller implements AuthInterface
      */
     public function auth_login(array $credentials): object
     {
-        if (! $token = Auth::attempt($credentials)) {
+        if (! $token = Auth::attempt(["id_user" => $credentials["username"], "password" => $credentials["password"]])) {
             return $this->callback(false, "Unauthorized username or password is wrong");
         }
 
@@ -55,7 +56,45 @@ class AuthRepository extends Controller implements AuthInterface
             'access_token' => $token,
             'token_type' => 'bearer',
             'user' => auth()->user(),
+            'role_bpu' => $this->role_bpu(),
             'expires_in' => auth()->factory()->getTTL() * 60 * 24
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function role_bpu(): array
+    {
+        $roleBpuUser = [];
+        $feature = ["createBpu","validateBpu","approverBpu","knowledgeBpu"];
+        foreach ($feature as $key => $value) {
+            $roles = RoleBpu::where($this->column_feature($value),\auth()->user()->id_user)->get();
+            foreach ($roles as $key => $valRole) {
+                $roleBpuUser[$valRole->folder_name][$valRole->bpu]['role'][] = $value;
+                $roleBpuUser[$valRole->folder_name][$valRole->bpu]['condition'][$value] = [
+                    "key" => $valRole->condition,
+                    "value" => $valRole->value_condition
+                ];
+            }
+        }
+
+        return $roleBpuUser;
+    }
+
+    /**
+     * @param $feature
+     * @return string
+     */
+    protected function column_feature($feature): string
+    {
+        $data = [
+            "createBpu" => "create_bpu",
+            "validateBpu" => "validate_bpu",
+            "approverBpu" => "approver_bpu",
+            "knowledgeBpu" => "knowledge_bpu",
+        ];
+
+        return $data[$feature];
     }
 }
