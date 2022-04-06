@@ -16,9 +16,9 @@ class Controller extends BaseController
      * @param int $code
      * @param string $message
      * @param null $data
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    public function BuildResponse(int $code, string $message, $data = null): \Illuminate\Http\JsonResponse
+    public function BuildResponse(int $code, string $message, $data = null): JsonResponse
     {
         $response = [
             'response' => [

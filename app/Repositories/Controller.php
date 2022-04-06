@@ -143,4 +143,20 @@ class Controller
     {
         return $this->request->get($key, $default);
     }
+
+    /**
+     * @return mixed
+     */
+    public function user_division()
+    {
+        return auth()->user()->divisi;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function user_level()
+    {
+        return auth()->user()->level;
+    }
 }

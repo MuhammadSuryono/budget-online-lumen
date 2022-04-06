@@ -105,6 +105,9 @@ $app->bind(\App\Repositories\Interfaces\AuthInterface::class, \App\Repositories\
 $app->bind(\App\Repositories\Interfaces\SubmissionBudgetInterface::class, \App\Repositories\SubmissionRepository::class);
 $app->bind(\App\Repositories\Interfaces\BpuInterface::class, \App\Repositories\BpuRepository::class);
 $app->bind(\App\Repositories\Interfaces\ItemBudgetInterface::class, \App\Repositories\ItemBudgetRepository::class);
+$app->bind(\App\Repositories\Interfaces\UserInterface::class, \App\Repositories\UserRepository::class);
+$app->bind(\App\Repositories\Interfaces\CategoryFolderInterface::class, \App\Repositories\CategoryFolderRepository::class);
+$app->bind(\App\Repositories\Interfaces\ProjectManagementInterface::class, \App\Repositories\ProjectManagementRepository::class);
 
 /*
 |--------------------------------------------------------------------------

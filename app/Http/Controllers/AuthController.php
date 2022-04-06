@@ -39,8 +39,6 @@ class AuthController extends Controller
             'password' => 'required|string',
         ]);
 
-//        dd(password_hash('123456', PASSWORD_BCRYPT));
-
         $credentials = $this->request->only(['username', 'password']);
         $auth = $this->authInterface->auth_login($credentials);
 

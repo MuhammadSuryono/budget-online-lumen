@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Budget;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,6 +15,6 @@ class SubmissionBudget extends \Illuminate\Database\Eloquent\Model
      */
     public function itemBudgets(): HasMany
     {
-        return $this->hasMany('App\Models\ItemBudget', "waktu", "waktu");
+        return $this->hasMany('App\Models\Budget\ItemBudget', "waktu", "waktu");
     }
 }

@@ -36,6 +36,8 @@ $router->group(['prefix' => 'api/v1'], function () use ($router)
     {
         $router->get('/list', 'Submission\SubmissionBudgetController@list_submission');
         $router->get('/{submissionId}', 'Submission\SubmissionBudgetController@read');
+        $router->get('/option-folder/list', 'Submission\SubmissionBudgetController@get_options_folder');
+        $router->get('/category-folder/list', 'Submission\SubmissionBudgetController@get_category_folder');
 
         $router->group(['prefix' => '{submissionId}/item'], function () use ($router)
         {
@@ -47,6 +49,16 @@ $router->group(['prefix' => 'api/v1'], function () use ($router)
     {
         $router->get('/{itemId}', 'Submission\Item\ItemBudgetController@read');
         $router->get('/{itemId}/bpu', 'Bpu\BpuController@list_bpu');
+    });
+
+    $router->group(['prefix' => 'user'], function () use ($router)
+    {
+        $router->get('/list', 'UserController@list_all');
+    });
+
+    $router->group(['prefix' => 'project'], function () use ($router)
+    {
+        $router->get('/{type}/list', 'Project\ProjectManagementController@get_list_project');
     });
 
 });

@@ -14,4 +14,10 @@ interface SubmissionBudgetInterface
      * @return mixed
      */
     public function read_submission($submissionId);
+
+    /**
+     * @return object
+     */
+    public function get_option_type_submission_folder(): object;
+
 }

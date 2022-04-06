@@ -2,8 +2,10 @@
 
 namespace App\Repositories;
 
-use App\Models\RoleBpu;
+use App\Models\Budget\RoleBpu;
+use App\Models\Budget\User;
 use App\Repositories\Interfaces\AuthInterface;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthRepository extends Controller implements AuthInterface
@@ -14,10 +16,15 @@ class AuthRepository extends Controller implements AuthInterface
      */
     public function auth_login(array $credentials): object
     {
-        if (! $token = Auth::attempt(["id_user" => $credentials["username"], "password" => $credentials["password"]])) {
+        $user = User::where("id_user", $credentials["username"])->first();
+        if ($user == null) return $this->callback(false, "Unauthorized username is wrong or not found");
+        $user->makeVisible("password");
+        if ($user->password != md5($credentials["password"])) return $this->callback(false, "Unauthorized password is wrong");
+        if (! $token = auth("api")->login($user)) {
             return $this->callback(false, "Unauthorized username or password is wrong");
         }
 
+        $user->makeHidden("password");
         return $this->callback(true, "Success login", $this->respond_with_token($token));
     }
 

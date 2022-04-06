@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use App\Models\Bpu;
-use App\Models\ItemBudget;
+use App\Models\Budget\Bpu;
+use App\Models\Budget\ItemBudget;
 use App\Repositories\Interfaces\ItemBudgetInterface;
 use App\Repositories\Interfaces\SubmissionBudgetInterface;
 use Illuminate\Http\Request;
